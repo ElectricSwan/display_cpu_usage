@@ -1,16 +1,24 @@
 """ Display or graph the control_fan.py log file """
 
 from datetime import datetime
+import logging # So we can change the log level
 
 # import flask
 from flask import Flask, render_template, request
 
 import psutil
 
-app = Flask(__name__)
+VERSION = "1.0.1"
+
+# To prevent Flask from logging each "GET" to console, change the log level to ERROR
+# for 'werkzeug' (Flask).
+# 2020-06=04; From https://stackoverflow.com/a/18379764/641450
+log = logging.getLogger('werkzeug') # pylint: disable=invalid-name
+log.setLevel(logging.ERROR)
+
+app = Flask(__name__) # pylint: disable=invalid-name
 #app.debug = True # Uncomment to debug
 
-VERSION = "1.0.0"
 
 @app.route('/')
 def home():
